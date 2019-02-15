@@ -30,8 +30,16 @@ export default class App extends Component {
       let city = item.restaurant.location.city;
       let address = item.restaurant.location.address;
       let price = item.restaurant.average_cost_for_two * 198.37;
+      let number_string = price.toString(),
+        sisa = number_string.length % 3,
+        rupiah = number_string.substr(0, sisa),
+        ribuan = number_string.substr(sisa).match(/\d{3}/g);
+      if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.')
+      }
       let picture = item.restaurant.thumb;
-      let nopicture = 'https://me.me/i/i-ifttt-image-not-found-%3Cp%3Eso-sorry-little-one%3C-p%3E-22708528'
+      let nopicture = 'https://pics.me.me/i-ifttt-image-not-found-%3Cp%3Eso-sorry-little-one%3C-p%3E-34039326.png'
       if (picture == false) {
         picture = nopicture
       }
@@ -48,7 +56,7 @@ export default class App extends Component {
                   </Body>
                 </Left>
                 <Right>
-                  <Text>Rp {price}</Text>
+                  <Text>Rp {rupiah}</Text>
                 </Right>
               </CardItem>
               <CardItem>
